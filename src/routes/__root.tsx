@@ -9,8 +9,9 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import * as React from 'react'
 import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
-import appCss from '~/styles/app.css?url'
 import { seo } from '~/utils/seo'
+import { authClient } from '~/lib/auth-client'
+import appCss from "~/styles/app.css?url"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -23,9 +24,8 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       ...seo({
-        title:
-          'TanStack Start | Type-Safe, Client-First, Full-Stack React Framework',
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+        title: 'Your App Name',
+        description: `Your app description`,
       }),
     ],
     links: [
@@ -53,7 +53,7 @@ export const Route = createRootRoute({
   }),
   errorComponent: (props) => {
     return (
-      <RootDocument>
+      <RootDocument isAuthenticated={false} setIsAuthenticated={() => { }}>
         <DefaultCatchBoundary {...props} />
       </RootDocument>
     )
@@ -63,21 +63,47 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false)
+
+  React.useEffect(() => {
+    // Check if user is authenticated
+    const checkAuth = async () => {
+      const { data } = await authClient.getSession()
+      setIsAuthenticated(!!data?.user)
+    }
+    checkAuth()
+  }, [])
+
   return (
-    <RootDocument>
+    <RootDocument isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}>
       <Outlet />
     </RootDocument>
   )
 }
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({
+  children,
+  isAuthenticated,
+  setIsAuthenticated
+}: {
+  children: React.ReactNode
+  isAuthenticated: boolean
+  setIsAuthenticated: (value: boolean) => void
+}) {
+  const handleSignOut = async () => {
+    const { error } = await authClient.signOut()
+    if (!error) {
+      setIsAuthenticated(false)
+    }
+  }
+
   return (
     <html>
       <head>
         <HeadContent />
       </head>
       <body>
-        <div className="p-2 flex gap-2 text-lg">
+        <div className="p-2 flex gap-2 text-lg items-center">
           <Link
             to="/"
             activeProps={{
@@ -103,31 +129,33 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           >
             Users
           </Link>{' '}
-          <Link
-            to="/route-a"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Pathless Layout
-          </Link>{' '}
-          <Link
-            to="/deferred"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Deferred
-          </Link>{' '}
-          <Link
-            // @ts-expect-error
-            to="/this-route-does-not-exist"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            This Route Does Not Exist
-          </Link>
+          {!isAuthenticated ? (
+            <>
+              <Link
+                to="/sign-in"
+                activeProps={{
+                  className: 'font-bold',
+                }}
+              >
+                Sign In
+              </Link>{' '}
+              <Link
+                to="/sign-up"
+                activeProps={{
+                  className: 'font-bold',
+                }}
+              >
+                Sign Up
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={handleSignOut}
+              className="text-red-500 hover:text-red-700"
+            >
+              Sign Out
+            </button>
+          )}
         </div>
         <hr />
         {children}
