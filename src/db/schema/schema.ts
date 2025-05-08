@@ -1,14 +1,5 @@
 import { pgTable, text, timestamp, uuid, boolean } from 'drizzle-orm/pg-core';
-
-export const users = pgTable('users', {
-    id: uuid('id').primaryKey().defaultRandom(),
-    email: text('email').notNull().unique(),
-    name: text('name').notNull(),
-    avatarUrl: text('avatar_url'),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
-
+import { user } from './auth-schema';
 export const projects = pgTable('projects', {
     id: uuid('id').primaryKey().defaultRandom(),
     title: text('title').notNull(),
@@ -30,7 +21,7 @@ export const blogPosts = pgTable('blog_posts', {
     content: text('content').notNull(),
     excerpt: text('excerpt'),
     published: boolean('published').default(false),
-    authorId: uuid('author_id').references(() => users.id),
+    authorId: text('author_id').references(() => user.id),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
 }); 

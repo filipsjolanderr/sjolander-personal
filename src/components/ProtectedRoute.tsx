@@ -14,7 +14,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
         const checkAuth = async () => {
             const { data } = await authClient.getSession()
             if (!data?.user) {
-                navigate({ to: "/sign-in" })
+                navigate({ to: "/auth/sign-in" })
             }
             setIsLoading(false)
         }

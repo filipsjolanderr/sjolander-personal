@@ -15,6 +15,20 @@
       "when": 1746696844139,
       "tag": "0001_lowly_rhodey",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1746718626591,
+      "tag": "0002_icy_luminals",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1746718709909,
+      "tag": "0003_cool_katie_power",
+      "breakpoints": true
     }
   ]
 }

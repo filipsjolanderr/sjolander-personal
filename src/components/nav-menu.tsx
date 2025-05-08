@@ -53,18 +53,25 @@ export function NavMenu() {
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <Link to="/cv" className={navigationMenuTriggerStyle()}>
-                                Curriculum Vitae 
+                                Curriculum Vitae
                             </Link>
                         </NavigationMenuItem>
+                        {isAuthenticated && (
+                            <NavigationMenuItem>
+                                <Link to="/dashboard" className={navigationMenuTriggerStyle()}>
+                                    Dashboard
+                                </Link>
+                            </NavigationMenuItem>
+                        )}
                     </NavigationMenuList>
                 </NavigationMenu>
                 <div className="ml-auto flex items-center space-x-4">
                     {!isAuthenticated ? (
                         <>
-                            <Link to="/sign-in">
+                            <Link to="/auth/sign-in">
                                 <Button variant="ghost">Sign In</Button>
                             </Link>
-                            <Link to="/sign-up">
+                            <Link to="/auth/sign-up">
                                 <Button>Sign Up</Button>
                             </Link>
                         </>
