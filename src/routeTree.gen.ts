@@ -14,7 +14,10 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as SignUpImport } from './routes/sign-up'
 import { Route as SignInImport } from './routes/sign-in'
 import { Route as RedirectImport } from './routes/redirect'
+import { Route as ProjectsImport } from './routes/projects'
 import { Route as DeferredImport } from './routes/deferred'
+import { Route as CvImport } from './routes/cv'
+import { Route as BlogImport } from './routes/blog'
 import { Route as PathlessLayoutImport } from './routes/_pathlessLayout'
 import { Route as UsersRouteImport } from './routes/users.route'
 import { Route as PostsRouteImport } from './routes/posts.route'
@@ -48,9 +51,27 @@ const RedirectRoute = RedirectImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ProjectsRoute = ProjectsImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DeferredRoute = DeferredImport.update({
   id: '/deferred',
   path: '/deferred',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CvRoute = CvImport.update({
+  id: '/cv',
+  path: '/cv',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogRoute = BlogImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -160,11 +181,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathlessLayoutImport
       parentRoute: typeof rootRoute
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogImport
+      parentRoute: typeof rootRoute
+    }
+    '/cv': {
+      id: '/cv'
+      path: '/cv'
+      fullPath: '/cv'
+      preLoaderRoute: typeof CvImport
+      parentRoute: typeof rootRoute
+    }
     '/deferred': {
       id: '/deferred'
       path: '/deferred'
       fullPath: '/deferred'
       preLoaderRoute: typeof DeferredImport
+      parentRoute: typeof rootRoute
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsImport
       parentRoute: typeof rootRoute
     }
     '/redirect': {
@@ -312,7 +354,10 @@ export interface FileRoutesByFullPath {
   '/posts': typeof PostsRouteRouteWithChildren
   '/users': typeof UsersRouteRouteWithChildren
   '': typeof PathlessLayoutNestedLayoutRouteWithChildren
+  '/blog': typeof BlogRoute
+  '/cv': typeof CvRoute
   '/deferred': typeof DeferredRoute
+  '/projects': typeof ProjectsRoute
   '/redirect': typeof RedirectRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
@@ -328,7 +373,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof PathlessLayoutNestedLayoutRouteWithChildren
+  '/blog': typeof BlogRoute
+  '/cv': typeof CvRoute
   '/deferred': typeof DeferredRoute
+  '/projects': typeof ProjectsRoute
   '/redirect': typeof RedirectRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
@@ -347,7 +395,10 @@ export interface FileRoutesById {
   '/posts': typeof PostsRouteRouteWithChildren
   '/users': typeof UsersRouteRouteWithChildren
   '/_pathlessLayout': typeof PathlessLayoutRouteWithChildren
+  '/blog': typeof BlogRoute
+  '/cv': typeof CvRoute
   '/deferred': typeof DeferredRoute
+  '/projects': typeof ProjectsRoute
   '/redirect': typeof RedirectRoute
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
@@ -368,7 +419,10 @@ export interface FileRouteTypes {
     | '/posts'
     | '/users'
     | ''
+    | '/blog'
+    | '/cv'
     | '/deferred'
+    | '/projects'
     | '/redirect'
     | '/sign-in'
     | '/sign-up'
@@ -383,7 +437,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/blog'
+    | '/cv'
     | '/deferred'
+    | '/projects'
     | '/redirect'
     | '/sign-in'
     | '/sign-up'
@@ -400,7 +457,10 @@ export interface FileRouteTypes {
     | '/posts'
     | '/users'
     | '/_pathlessLayout'
+    | '/blog'
+    | '/cv'
     | '/deferred'
+    | '/projects'
     | '/redirect'
     | '/sign-in'
     | '/sign-up'
@@ -420,7 +480,10 @@ export interface RootRouteChildren {
   PostsRouteRoute: typeof PostsRouteRouteWithChildren
   UsersRouteRoute: typeof UsersRouteRouteWithChildren
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
+  BlogRoute: typeof BlogRoute
+  CvRoute: typeof CvRoute
   DeferredRoute: typeof DeferredRoute
+  ProjectsRoute: typeof ProjectsRoute
   RedirectRoute: typeof RedirectRoute
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
@@ -432,7 +495,10 @@ const rootRouteChildren: RootRouteChildren = {
   PostsRouteRoute: PostsRouteRouteWithChildren,
   UsersRouteRoute: UsersRouteRouteWithChildren,
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
+  BlogRoute: BlogRoute,
+  CvRoute: CvRoute,
   DeferredRoute: DeferredRoute,
+  ProjectsRoute: ProjectsRoute,
   RedirectRoute: RedirectRoute,
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
@@ -453,7 +519,10 @@ export const routeTree = rootRoute
         "/posts",
         "/users",
         "/_pathlessLayout",
+        "/blog",
+        "/cv",
         "/deferred",
+        "/projects",
         "/redirect",
         "/sign-in",
         "/sign-up",
@@ -483,8 +552,17 @@ export const routeTree = rootRoute
         "/_pathlessLayout/_nested-layout"
       ]
     },
+    "/blog": {
+      "filePath": "blog.tsx"
+    },
+    "/cv": {
+      "filePath": "cv.tsx"
+    },
     "/deferred": {
       "filePath": "deferred.tsx"
+    },
+    "/projects": {
+      "filePath": "projects.tsx"
     },
     "/redirect": {
       "filePath": "redirect.tsx"

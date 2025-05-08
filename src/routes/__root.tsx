@@ -12,6 +12,8 @@ import { NotFound } from '~/components/NotFound'
 import { seo } from '~/utils/seo'
 import { authClient } from '~/lib/auth-client'
 import appCss from "~/styles/app.css?url"
+import { ThemeProvider } from '~/components/theme-provider'
+import { NavMenu } from '~/components/nav-menu'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -24,8 +26,8 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       ...seo({
-        title: 'Your App Name',
-        description: `Your app description`,
+        title: 'Filip Sjölander',
+        description: `Filip Sjölander's personal website`,
       }),
     ],
     links: [
@@ -103,64 +105,14 @@ function RootDocument({
         <HeadContent />
       </head>
       <body>
-        <div className="p-2 flex gap-2 text-lg items-center">
-          <Link
-            to="/"
-            activeProps={{
-              className: 'font-bold',
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{' '}
-          <Link
-            to="/posts"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Posts
-          </Link>{' '}
-          <Link
-            to="/users"
-            activeProps={{
-              className: 'font-bold',
-            }}
-          >
-            Users
-          </Link>{' '}
-          {!isAuthenticated ? (
-            <>
-              <Link
-                to="/sign-in"
-                activeProps={{
-                  className: 'font-bold',
-                }}
-              >
-                Sign In
-              </Link>{' '}
-              <Link
-                to="/sign-up"
-                activeProps={{
-                  className: 'font-bold',
-                }}
-              >
-                Sign Up
-              </Link>
-            </>
-          ) : (
-            <button
-              onClick={handleSignOut}
-              className="text-red-500 hover:text-red-700"
-            >
-              Sign Out
-            </button>
-          )}
-        </div>
-        <hr />
-        {children}
-        <TanStackRouterDevtools position="bottom-right" />
-        <Scripts />
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+          <NavMenu />
+          <div className="container mx-auto py-6">
+            {children}
+          </div>
+          <TanStackRouterDevtools position="bottom-right" />
+          <Scripts />
+        </ThemeProvider>
       </body>
     </html>
   )
