@@ -12,6 +12,7 @@ import { ModeToggle } from "./mode-toggle"
 import { Button } from "./ui/button"
 import { authClient } from "~/lib/auth-client"
 import { useState, useEffect } from "react"
+import { UserButton } from "@daveyplate/better-auth-ui"
 
 export function NavMenu() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -53,7 +54,7 @@ export function NavMenu() {
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <Link to="/cv" className={navigationMenuTriggerStyle()}>
-                                Curriculum Vitae 
+                                Curriculum Vitae
                             </Link>
                         </NavigationMenuItem>
                     </NavigationMenuList>
@@ -61,10 +62,10 @@ export function NavMenu() {
                 <div className="ml-auto flex items-center space-x-4">
                     {!isAuthenticated ? (
                         <>
-                            <Link to="/sign-in">
+                            <Link to="/auth/sign-in">
                                 <Button variant="ghost">Sign In</Button>
                             </Link>
-                            <Link to="/sign-up">
+                            <Link to="/auth/sign-up">
                                 <Button>Sign Up</Button>
                             </Link>
                         </>
@@ -74,6 +75,7 @@ export function NavMenu() {
                         </Button>
                     )}
                     <ModeToggle />
+                    <UserButton />
                 </div>
             </div>
         </div>
