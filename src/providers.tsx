@@ -2,7 +2,7 @@ import { AuthQueryProvider } from "@daveyplate/better-auth-tanstack"
 import { AuthUIProviderTanstack } from "@daveyplate/better-auth-ui/tanstack"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Link, useRouter } from "@tanstack/react-router"
-import { ThemeProvider } from '~/components/theme-provider'
+import { ThemeProvider } from "next-themes"
 import type { ReactNode } from "react"
 import { Toaster } from "sonner"
 
@@ -24,12 +24,18 @@ export function Providers({ children }: { children: ReactNode }) {
         <QueryClientProvider client={queryClient}>
             <AuthQueryProvider>
                 <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
                 >
                     <AuthUIProviderTanstack
+                        providers={["github"]}
                         authClient={authClient}
                         navigate={(href) => router.navigate({ href })}
                         replace={(href) => router.navigate({ href, replace: true })}
                         Link={({ href, ...props }) => <Link to={href} {...props} />}
+                        settingsURL="/dashboard/settings"
                     >
                         {children}
 

@@ -59,7 +59,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
 
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <div className="flex min-h-svh flex-col">
             <NavMenu />

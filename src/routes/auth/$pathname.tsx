@@ -10,8 +10,11 @@ function RouteComponent() {
   const { pathname } = Route.useParams()
 
   return (
-    <main className="flex grow flex-col items-center justify-center gap-4 p-4">
-      <AuthCard pathname={pathname} />
+    <div className="flex size-full grow flex-col items-center justify-center gap-3 p-4">
+      <AuthCard pathname={pathname} classNames={{
+        base: "max-w-xs",
+        title: "text-xl font-semibold",
+      }} />
 
       <p
         className={cn(
@@ -20,6 +23,6 @@ function RouteComponent() {
         )}
       >
       </p>
-    </main>
+    </div>
   )
 }

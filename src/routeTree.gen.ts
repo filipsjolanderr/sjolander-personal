@@ -24,6 +24,7 @@ import { Route as UsersIndexImport } from './routes/users.index'
 import { Route as PostsIndexImport } from './routes/posts.index'
 import { Route as UsersUserIdImport } from './routes/users.$userId'
 import { Route as PostsPostIdImport } from './routes/posts.$postId'
+import { Route as DashboardSettingsImport } from './routes/dashboard/settings'
 import { Route as AuthPathnameImport } from './routes/auth/$pathname'
 import { Route as PathlessLayoutNestedLayoutImport } from './routes/_pathlessLayout/_nested-layout'
 import { Route as PostsPostIdDeepImport } from './routes/posts_.$postId.deep'
@@ -107,6 +108,12 @@ const PostsPostIdRoute = PostsPostIdImport.update({
   id: '/$postId',
   path: '/$postId',
   getParentRoute: () => PostsRouteRoute,
+} as any)
+
+const DashboardSettingsRoute = DashboardSettingsImport.update({
+  id: '/dashboard/settings',
+  path: '/dashboard/settings',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const AuthPathnameRoute = AuthPathnameImport.update({
@@ -221,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/auth/$pathname'
       fullPath: '/auth/$pathname'
       preLoaderRoute: typeof AuthPathnameImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/dashboard/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsImport
       parentRoute: typeof rootRoute
     }
     '/posts/$postId': {
@@ -346,6 +360,7 @@ export interface FileRoutesByFullPath {
   '/projects': typeof ProjectsRoute
   '/redirect': typeof RedirectRoute
   '/auth/$pathname': typeof AuthPathnameRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -364,6 +379,7 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsRoute
   '/redirect': typeof RedirectRoute
   '/auth/$pathname': typeof AuthPathnameRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts': typeof PostsIndexRoute
@@ -386,6 +402,7 @@ export interface FileRoutesById {
   '/redirect': typeof RedirectRoute
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -408,6 +425,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/redirect'
     | '/auth/$pathname'
+    | '/dashboard/settings'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts/'
@@ -425,6 +443,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/redirect'
     | '/auth/$pathname'
+    | '/dashboard/settings'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts'
@@ -445,6 +464,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/_pathlessLayout/_nested-layout'
     | '/auth/$pathname'
+    | '/dashboard/settings'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts/'
@@ -466,6 +486,7 @@ export interface RootRouteChildren {
   ProjectsRoute: typeof ProjectsRoute
   RedirectRoute: typeof RedirectRoute
   AuthPathnameRoute: typeof AuthPathnameRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
   PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
 }
 
@@ -480,6 +501,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectsRoute: ProjectsRoute,
   RedirectRoute: RedirectRoute,
   AuthPathnameRoute: AuthPathnameRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
   PostsPostIdDeepRoute: PostsPostIdDeepRoute,
 }
 
@@ -503,6 +525,7 @@ export const routeTree = rootRoute
         "/projects",
         "/redirect",
         "/auth/$pathname",
+        "/dashboard/settings",
         "/posts_/$postId/deep"
       ]
     },
@@ -554,6 +577,9 @@ export const routeTree = rootRoute
     },
     "/auth/$pathname": {
       "filePath": "auth/$pathname.tsx"
+    },
+    "/dashboard/settings": {
+      "filePath": "dashboard/settings.tsx"
     },
     "/posts/$postId": {
       "filePath": "posts.$postId.tsx",

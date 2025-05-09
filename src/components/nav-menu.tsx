@@ -60,22 +60,8 @@ export function NavMenu() {
                     </NavigationMenuList>
                 </NavigationMenu>
                 <div className="ml-auto flex items-center space-x-4">
-                    {!isAuthenticated ? (
-                        <>
-                            <Link to="/auth/sign-in">
-                                <Button variant="ghost">Sign In</Button>
-                            </Link>
-                            <Link to="/auth/sign-up">
-                                <Button>Sign Up</Button>
-                            </Link>
-                        </>
-                    ) : (
-                        <Button variant="ghost" onClick={handleSignOut}>
-                            Sign Out
-                        </Button>
-                    )}
-                    <ModeToggle />
                     <UserButton />
+                    <ModeToggle />
                 </div>
             </div>
         </div>
